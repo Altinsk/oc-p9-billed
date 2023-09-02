@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
-import {getByTestId, screen, waitFor, getByLabelText, getAllByTestId, getByRole, getByText, fireEvent} from "@testing-library/dom"
+import {getByTestId, screen, waitFor, getByLabelText, getAllByTestId, getByRole, fireEvent, getByText, render} from "@testing-library/dom"
 import "@testing-library/jest-dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
@@ -61,68 +61,11 @@ describe("Given I am connected as an employee", () => {
       document.body.append(root);
       router()
       window.onNavigate(ROUTES_PATH.NewBill)
-      // await waitFor(() => screen.ByTestId('icon-mail'))
       const mailIcon = screen.queryAllByTestId('icon-mail')[0]
 
       expect(mailIcon).toHaveClass("active-icon");    
   })
 })
-
-// describe("ourClass", () => {
-//   let documentMock;
-//   let onNavigateMock;
-//   let storeMock;
-//   let localStorageMock;
-
-//   beforeEach(() => {
-//     documentMock = {
-//       querySelector: jest.fn().mockReturnValueOnce({
-//         addEventListener: jest.fn(),
-//       }),
-//       querySelectorAll : jest.fn().mockReturnValueOnce([
-//         {
-//           addEventListener: jest.fn(),
-//         },
-//       ])
-//     };
-
-//     onNavigateMock = jest.fn();
-//     storeMock = jest.fn();
-//     localStorageMock = jest.fn();
-
-//     new ourClass ({
-//       document: documentMock,
-//       onNavigate: onNavigateMock,
-//       store: storeMock,
-//       localStorage: localStorageMock
-//     });
-//   });
-
-//     it('should add event listeners to buttonNewBill and iconEye', () => {
-//       expect(documentMock.querySelector).toHaveBeenCalledWith(
-//         'button[data-testid="btn-new-bill"]'
-//       );
-//       expect(documentMock.querySelector().addEventListener).toHaveBeenCalledWith(
-//         'click',
-//         expect.any(Function)
-//       );
-//         expect(documentMock.querySelectorAll).toHaveBeenCalledWith(
-//         'div[data-testid="icon-eye"]'
-//       );
-//       expect(documentMock.querySelectorAll()[0].addEventListener).toHaveBeenCalledWith(
-//         'click',
-//         expect.any(Function)
-//       );
-//     });
-
-//     it('should create an instance of Logout', () => {
-//       expect(Logout).toHaveBeenCalledWith({
-//         document: documentMock,
-//         localStorage: localStorageMock,
-//         onNavigate: onNavigateMock,
-//       });
-//     });
-// })
 
 describe("Test suite Bills page", () => {
   it("Should show the following title at the top of the page: Mes notes de frais ", () => {
@@ -134,22 +77,3 @@ describe("Test suite Bills page", () => {
       getByTestId($wrapper, "myTitle").textContent).toEqual("Mes notes de frais")
   })
 })
-
-
-// describe("Nagivate to New bills", () => {
-//   test("Should navigate to new bill page", () => {
-//     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-//       window.localStorage.setItem('user', JSON.stringify({
-//         type: 'Employee'
-//       }))
-//       const root = document.createElement("div")
-//       root.setAttribute("id", "root")
-//       document.body.append(root);
-//       router()
-//       window.onNavigate(ROUTES_PATH.NewBill)
-//       // await waitFor(() => screen.ByTestId('icon-mail'))
-//       const mailIcon = screen.queryAllByTestId('icon-mail')[0]
-
-//       expect(mailIcon).toHaveClass("active-icon");    
-//   })
-// })
