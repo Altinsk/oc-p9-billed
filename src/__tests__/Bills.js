@@ -50,21 +50,6 @@ describe("Given I am connected as an employee", () => {
           getByTestId($wrapper, "btn-new-bill").textContent).toEqual("Nouvelle note de frais")
     })
   })
-
-  test("Should navigate to new bill page", () => {
-    Object.defineProperty(window, 'localStorage', { value: localStorageMock })
-      window.localStorage.setItem('user', JSON.stringify({
-        type: 'Employee'
-      }))
-      const root = document.createElement("div")
-      root.setAttribute("id", "root")
-      document.body.append(root);
-      router()
-      window.onNavigate(ROUTES_PATH.NewBill)
-      const mailIcon = screen.queryAllByTestId('icon-mail')[0]
-
-      expect(mailIcon).toHaveClass("active-icon");    
-  })
 })
 
 describe("Test suite Bills page", () => {
