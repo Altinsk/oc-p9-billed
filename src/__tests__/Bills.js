@@ -2,15 +2,14 @@
  * @jest-environment jsdom
  */
 
-import {getByTestId, screen, waitFor, getByLabelText, getAllByTestId, getByRole, fireEvent, getByText, render} from "@testing-library/dom"
+import {getByTestId, screen, waitFor, getByLabelText, getAllByTestId, getByRole, fireEvent, getByText, render, findByTestId} from "@testing-library/dom"
 import "@testing-library/jest-dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
-import { ourClass } from "../containers/Bills.js"
+import MyClass from '../containers/Bills.js';
 import { NewBillUI } from "../views/NewBillUI.js"
-
 import router from "../app/Router.js";
 import userEvent from "@testing-library/user-event";
 
@@ -51,6 +50,7 @@ describe("Given I am connected as an employee", () => {
           getByTestId($wrapper, "btn-new-bill").textContent).toEqual("Nouvelle note de frais")
     })
   })
+
   test("Should navigate to new bill page", () => {
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
@@ -77,3 +77,89 @@ describe("Test suite Bills page", () => {
       getByTestId($wrapper, "myTitle").textContent).toEqual("Mes notes de frais")
   })
 })
+
+describe('MyClass', () => {
+  describe('constructor', () => {
+    test('should initialize the class properties and add event listeners', () => {
+      // Create a mock document object and other required dependencies
+      const document = { querySelector: jest.fn(), querySelectorAll: jest.fn() };
+      const onNavigate = jest.fn();
+      const store = { bills: jest.fn() };
+      const localStorage = {};
+
+      // Create an instance of MyClass
+      const myClass = new MyClass({ document, onNavigate, store, localStorage });
+
+      // Assert that the properties and event listeners are set correctly
+      expect(myClass.onNavigate).toBe(onNavigate);
+      expect(myClass.store).toBe(store);
+
+      // Assert that the event listeners are added correctly
+      expect(document.querySelector).toHaveBeenCalledWith('button[data-testid="btn-new-bill"]');
+      expect(document.querySelectorAll).toHaveBeenCalledWith('div[data-testid="icon-eye"]');
+    });
+  });
+});
+
+describe('MyClass', () => {
+  describe('handleClickNewBill', () => {
+    test('should call onNavigate with the correct route path', () => {
+      // Create a mock onNavigate function
+      const onNavigate = jest.fn();
+
+      // Create an instance of MyClass
+      const myClass = new MyClass({ document, onNavigate, store: {}, localStorage: {} });
+
+      // Call the handleClickNewBill method
+      myClass.handleClickNewBill();
+
+      // // Assert that onNavigate is called with the correct route path
+      expect(onNavigate).toHaveBeenCalledWith(ROUTES_PATH['NewBill']);
+    });
+  });
+});
+
+// describe('MyClass', () => {
+//   describe('handleClickIconEye', () => {
+//     test('should display the modal with the correct bill image', () => {
+//       // Create a mock icon element with required attributes
+//       const icon = { getAttribute: jest.fn().mockReturnValue('bill-url') };
+
+//       // Create an instance of MyClass
+//       const myClass = new MyClass({ document, onNavigate: jest.fn(), store: {}, localStorage: {} });
+
+//       // Call the handleClickIconEye method
+//       myClass.handleClickIconEye(icon);
+
+//       // Assert that the modal is displayed with the correct bill image
+//       expect($('#modaleFile').find(".modal-body").html).toHaveBeenCalledWith(
+//         '`<div style=\'text-align: center;\' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`'
+//       );
+//       expect($('#modaleFile')).toHaveBeenCalledWith('show');
+//     });
+//   });
+// });
+
+describe('MyClass', () => {
+  describe('getBills', () => {
+    test('should return bills from the store', async () => {
+      // Create a mock store object with the necessary methods
+      const store = { bills: jest.fn().mockReturnValue({ list: jest.fn().mockResolvedValue(['bill1']) }) };
+
+      // Create an instance of MyClass
+      const myClass = new MyClass({ document, onNavigate: jest.fn(), store, localStorage: {} });
+
+      // Call the getBills method and await the result
+      const result = await myClass.getBills();
+      const result1 = Object.values(result[0]).slice(0, 5).join('');
+
+      // Assert that the bills are returned correctly
+      expect(result1).toEqual("bill1");
+    });
+  });
+});
+
+
+
+
+
