@@ -91,8 +91,10 @@ describe("MyCalss", () => {
   })
 })
 
-describe("Handle submit", () => {
+
+describe("handle submit", () => {
   it("Should handle the submitted form", () => {
+    // Set up the necessary DOM elements
     document.body.innerHTML = `
     <form id="bill-form">
       <input data-testid="datepicker" value="2023-09-03">
@@ -108,154 +110,77 @@ describe("Handle submit", () => {
       <button type="submit">Submit</button>
     </form>`;
 
-    const user = { email: 'test@example.com' };
-    Storage.prototype.getItem = jest.fn(() => JSON.stringify(user));
+      // Mock localStorage.getItem to return a mock user object
+      const mockUser = { email: 'test@example.com' };
+      jest.spyOn(localStorage, 'getItem').mockReturnValueOnce(JSON.stringify(mockUser));
     
-    const form = document.getElementById('bill-form');
-    form.dispatchEvent(new Event('submit'));
+      // Mock the updateBill and onNavigate functions
+      const mockUpdateBill = jest.fn();
+      const mockOnNavigate = jest.fn();
+      const mockRoutesPath = { Bills: '/bills' };
 
-    // const updateBillSpy = jest.spyOn(YourClass.prototype, 'updateBill');
-    // const onNavigateSpy = jest.spyOn(YourClass.prototype, 'onNavigate');
+      // Call the handleSubmit function
+      const handleSubmit = jest.fn();
+      handleSubmit();
+      mockUpdateBill();
 
-    // const expectedBill = {
-    //   email: user.email,
-    //   type: 'hotel',
-    //   name: 'Test Expense',
-    //   amount: 100,
-    //   date: '2023-09-03',
-    //   vat: '20',
-    //   pct: 20,
-    //   commentary: 'Test Commentary',
-    //   fileUrl: undefined,
-    //   fileName: undefined,
-    //   status: 'pending'
-    // };
-    // expect(updateBillSpy).toHaveBeenCalledWith(expectedBill);
-    // expect(onNavigateSpy).toHaveBeenCalledWith(ROUTES_PATH['Bills']);
+      const form = document.getElementById('bill-form');
+      form.dispatchEvent(new Event('submit'));
 
-    // it('should handle form submission', () => {
-    //   document.body.innerHTML = `
-    //     <form id="bill-form">
-    //       <input data-testid="datepicker" value="2023-09-03">
-    //       <select data-testid="expense-type">
-    //         <option value="hotel">Hotel</option>
-    //         <option value="restaurant">Restaurant</option>
-    //       </select>
-    //       <input data-testid="expense-name" value="Test Expense">
-    //       <input data-testid="amount" value="100">
-    //       <input data-testid="vat" value="20">
-    //       <input data-testid="pct" value="20">
-    //       <textarea data-testid="commentary">Test Commentary</textarea>
-    //       <button type="submit">Submit</button>
-    //     </form>`;
-      
-    //     const user = { email: 'test@example.com' };
-    //     Storage.prototype.getItem = jest.fn(() => JSON.stringify(user));
-        
-    //     const updateBillSpy = jest.spyOn(YourClass.prototype, 'updateBill');
-    //     const onNavigateSpy = jest.spyOn(YourClass.prototype, 'onNavigate');
-        
-    //     const form = document.getElementById('bill-form');
-    //     form.dispatchEvent(new Event('submit'));
-        
-    //     const expectedBill = {
-    //       email: user.email,
-    //       type: 'hotel',
-    //       name: 'Test Expense'
-    //     }    
-    // })
+
+      // Assert that the bill object is correctly created and passed to updateBill
+      const expectedBill = {
+          email: 'test@example.com',
+          type: 'type1',
+          name: 'Expense Name',
+          amount: 100,
+          date: '2023-09-05',
+          vat: '20',
+          pct: 10,
+          commentary: 'Some commentary',
+          fileUrl: undefined,
+          fileName: undefined,
+          status: 'pending',
+      };
+      expect(mockUpdateBill).toHaveLastReturnedWith(expectedBill);
+
+
+          // Now you can make assertions. For example, you can check if localStorage.getItem has been called
+
+
+      // Assert that the onNavigate function is called with the correct path
+      // expect(mockOnNavigate).toHaveBeenCalledWith('/bills');
   })
 })
 
+describe("handle change", () => {
+  // Set up the DOM for testing
+  document.body.innerHTML = `
+  <div>
+    <input type="file" data-testid="file" />
+  </div>
+`;
 
-// describe("handle Change", () => {
-//   describe("Should have all the required data", () => {
-//       const updateBill = jest.fn();
-//       const onNavigate = jest.fn();
-//     localStorage.getItem = jest.fn().mockImplementation(() => JSON.stringify({ email: "test@example.com" }));
-//     document.querySelector = jest.fn();
-//     document.querySelector.mockImplementation((selector) => {
-//       switch (selector) {
-//         case 'input[data-testid="datepicker"]':
-//           return { value: '2023-03-09' };
-//         // mock other elements here...
-//         default:
-//           return null;
-//       }
-//     });
+  test('handleChangeFile function', () => {
+    // Create a mock event object
+    const mockEvent = {
+      preventDefault: jest.fn(),
+      target: {
+        value: 'C:\\path\\to\\file.jpg',
+      },
+    };
 
-
-//     test('handleSubmit', () => {
-//       // const event = {
-//       //   preventDefault: jest.fn(),
-//       //   target: { querySelector: document.querySelector }
-//       // };
-//       // handleSubmit(event);
-//       // expect(localStorage.getItem).toHaveBeenCalledWith("user");
-//       // expect(this.updateBill).toHaveBeenCalledWith(/* expected bill object */);
-//       // expect(this.onNavigate).toHaveBeenCalledWith(ROUTES_PATH['Bills']);
-//     });
+    // Call the handleChangeFile function with the mock event
+    const handleChangeFile = jest.fn();
+    handleChangeFile(mockEvent);
     
 
-//     // jest.spyOn(event.target, 'querySelector')
-//     // .mockReturnValueOnce({ value: 'expense-type-value' }) // Replace with the desired value
-//     // .mockReturnValueOnce({ value: 'expense-name-value' }) // Replace with the desired value
-//     // .mockReturnValueOnce({ value: 'amount-value' }) // Replace with the desired value
-//     // .mockReturnValueOnce({ value: 'datepicker-value' }) // Replace with the desired value
-//     // .mockReturnValueOnce({ value: 'vat-value' }) // Replace with the desired value
-//     // .mockReturnValueOnce({ value: 'pct-value' }) // Replace with the desired value
-//     // .mockReturnValueOnce({ value: 'commentary-value' }); // Replace with the desired value
+    // Assertions
+    expect(mockEvent.preventDefault).toHaveBeenCalled();
+    expect(screen.getByText('filePath')).toBeInTheDocument();
+    expect(screen.getByText('fileName')).toBeInTheDocument();
+    expect(screen.getByText('isValidExtention')).toBeInTheDocument();
+    // Add more assertions as needed
+  });
 
-//     // const form = screen.getAllByTestId('form-new-bill')[0];
-//     // form.dispatchEvent(new Event('submit'));
-
-
-    
-//     // Now you can make assertions. For example, you can check if localStorage.getItem has been called
-//     // expect(updateBill).toHaveBeenCalledWith({
-//     //   email: 'user-email', // Replace with the desired value
-//     //   type: 'expense-type-value', // Replace with the desired value
-//     //   name: 'expense-name-value', // Replace with the desired value
-//     //   amount: parseInt('amount-value'), // Replace with the desired value
-//     //   date: 'datepicker-value', // Replace with the desired value
-//     //   vat: 'vat-value', // Replace with the desired value
-//     //   pct: parseInt('pct-value') || 20, // Replace with the desired value
-//     //   commentary: 'commentary-value', // Replace with the desired value
-//     //   fileUrl: undefined,
-//     //   fileName: undefined,
-//     //   status: 'pending'
-//     // });    
-
-//   })
-//   it("Should handle any change", () => {
-//     document.body.innerHTML = `
-//       <input data-testid="file" type="file" />
-//     `;
-//     const input = document.querySelector('input[data-testid="file"]');
-//     const mockFile = new File([""], "photo.png", { type: "image/png" });
-//     // input.files = {
-//     //   0: mockFile,
-//     //   length: 1,
-//     //   item: (index) => mockFile
-//     // };
-
-//     const mockEvent = {
-//       preventDefault: jest.fn(),
-//       target: { value: "C:\\fakepath\\photo.png" }
-//     };
-
-//     const newBill = new NewBill({ document, onNavigate,  localStorage})
-//     newBill.handleChangeFile(mockEvent);
-
-//     // expect(formData.get('file')).toBe(mockFile);
-//     // expect(formData.get('email')).toBe(email);
-//     // expect(isValidExtention).toBeTruthy();
-    
-
-    
-
-
-
-//   })
-
-// })
+})
