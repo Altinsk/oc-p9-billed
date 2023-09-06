@@ -180,7 +180,6 @@ describe("handle change", () => {
     expect(screen.getByText('filePath')).toBeInTheDocument();
     expect(screen.getByText('fileName')).toBeInTheDocument();
     expect(screen.getByText('isValidExtention')).toBeInTheDocument();
-    // Add more assertions as needed
   });
 
 })
