@@ -33,7 +33,6 @@ describe("Given I am connected as an employee", () => {
       expect($wrapper).toHaveTextContent("Envoyer une note de frais")
     })
   })
-
   it("Should navigate to new bill page", async () => {
     Object.defineProperty(window, 'localStorage', { value: localStorageMock })
       window.localStorage.setItem('user', JSON.stringify({
@@ -51,8 +50,6 @@ describe("Given I am connected as an employee", () => {
   })
 })
 
-
- 
 describe('handle submit', () => {
   beforeAll(() => {
     document.body.innerHTML = NewBillUI();

@@ -33,7 +33,7 @@ describe("Given I am connected as an employee", () => {
         getByTestId(document.body, "icon-window")).toHaveClass("active-icon")
       
     })
-    test("Then bills should be ordered from earliest to latest", () => {
+    test("The bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
       const antiChrono = (a, b) => ((a < b) ? -1 : 1)
@@ -47,19 +47,21 @@ describe("Given I am connected as an employee", () => {
       $wrapper.innerHTML = `<button type="button" data-testid='btn-new-bill' class="btn btn-primary">Nouvelle note de frais</button>
       `
         expect(
-          getByTestId($wrapper, "btn-new-bill").textContent).toEqual("Nouvelle note de frais")
+          getByTestId($wrapper, "btn-new-bill").textContent).toEqual("Nouvelle note de frais"
+        )
     })
   })
 })
 
 describe("Test suite Bills page", () => {
-  it("Should show the following title at the top of the page: Mes notes de frais ", () => {
+  it("Should show a title at the top of the page", () => {
     const $wrapper = document.createElement("div");
 
     $wrapper.innerHTML = `<div class='content-title' data-testid="myTitle">Mes notes de frais</div>`
 
     expect(
-      getByTestId($wrapper, "myTitle").textContent).toEqual("Mes notes de frais")
+      getByTestId($wrapper, "myTitle").textContent).toEqual("Mes notes de frais"
+    )
   })
 })
 
@@ -103,27 +105,6 @@ describe('MyClass', () => {
     });
   });
 });
-
-// describe('MyClass', () => {
-//   describe('handleClickIconEye', () => {
-//     test('should display the modal with the correct bill image', () => {
-//       // Create a mock icon element with required attributes
-//       const icon = { getAttribute: jest.fn().mockReturnValue('bill-url') };
-
-//       // Create an instance of MyClass
-//       const myClass = new MyClass({ document, onNavigate: jest.fn(), store: {}, localStorage: {} });
-
-//       // Call the handleClickIconEye method
-//       myClass.handleClickIconEye(icon);
-
-//       // Assert that the modal is displayed with the correct bill image
-//       expect($('#modaleFile').find(".modal-body").html).toHaveBeenCalledWith(
-//         '`<div style=\'text-align: center;\' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`'
-//       );
-//       expect($('#modaleFile')).toHaveBeenCalledWith('show');
-//     });
-//   });
-// });
 
 describe('MyClass', () => {
   describe('getBills', () => {
