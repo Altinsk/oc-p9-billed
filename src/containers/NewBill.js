@@ -19,14 +19,9 @@ export default class NewBill {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
-    console.log("filePath", filePath);
     const fileName = filePath[filePath.length-1]
-    console.log("fileName", fileName);
     const isValidExtention = /\.(jpe?g|png)$/i.test(filePath)
-    console.log("isValidExtention", isValidExtention);
     const formData = new FormData()
-    console.log(formData);
-    console.log(file);
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
