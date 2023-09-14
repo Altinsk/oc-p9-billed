@@ -24,13 +24,8 @@ describe("Given I am connected as an employee", () => {
       }))
       const html = NewBillUI()
       document.body.innerHTML = html
-      //to-do write assertion
-
-      const $wrapper = document.createElement("div");
-
-      $wrapper.innerHTML = `<div class='content-title'> Envoyer une note de frais </div>`
-
-      expect($wrapper).toHaveTextContent("Envoyer une note de frais")
+      const $wrapper = document.querySelector(".content-title");
+        expect($wrapper).toHaveTextContent("Envoyer une note de frais")
     })
   })
   it("Should navigate to new bill page", async () => {
@@ -43,8 +38,7 @@ describe("Given I am connected as an employee", () => {
       document.body.append(root);
       router()
       window.onNavigate(ROUTES_PATH.NewBill)
-      // await waitFor(() => screen.ByTestId('icon-mail'))
-      const mailIcon = screen.queryAllByTestId('icon-mail')[0]
+       const mailIcon = screen.queryAllByTestId('icon-mail')[0]
 
       expect(mailIcon).toHaveClass("active-icon");    
   })
@@ -65,6 +59,8 @@ describe('handle submit', () => {
 
     setTimeout(() => {
       expect(newBill.billId).toEqual('1234');
+      // expect(newBill.fileUrl).toBe('https://localhost:3456/images/test.jpg');
+
     });
   });
 
@@ -81,4 +77,6 @@ describe('handle submit', () => {
     expect(element).toBeInTheDocument();
   });
 });
+
+
 

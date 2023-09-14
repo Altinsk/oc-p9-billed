@@ -38,16 +38,14 @@ describe("Given I am connected as an employee", () => {
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
       const antiChrono = (a, b) => ((a < b) ? -1 : 1)
       const datesSorted = [...dates].sort(antiChrono)
-      expect(dates.sort(antiChrono)).toEqual(datesSorted)
+      expect(dates).toEqual(datesSorted)
     })
 
     test("Should show a New bill button to create a new bill", () => {
-      const $wrapper = document.createElement("div")
-
-      $wrapper.innerHTML = `<button type="button" data-testid='btn-new-bill' class="btn btn-primary">Nouvelle note de frais</button>
-      `
+      document.body.innerHTML = BillsUI ({data : bills})
         expect(
-          getByTestId($wrapper, "btn-new-bill").textContent).toEqual("Nouvelle note de frais"
+          screen.getByTestId("btn-new-bill").textContent)
+          .toEqual("Nouvelle note de frais"
         )
     })
   })
@@ -55,13 +53,10 @@ describe("Given I am connected as an employee", () => {
 
 describe("Test suite Bills page", () => {
   it("Should show a title at the top of the page", () => {
-    const $wrapper = document.createElement("div");
-
-    $wrapper.innerHTML = `<div class='content-title' data-testid="myTitle">Mes notes de frais</div>`
-
-    expect(
-      getByTestId($wrapper, "myTitle").textContent).toEqual("Mes notes de frais"
-    )
+    document.body.innerHTML = BillsUI({ data: bills })
+      expect(
+        screen.getByTestId("myTitle").textContent)
+        .toEqual(" Mes notes de frais ")
   })
 })
 
