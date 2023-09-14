@@ -33,15 +33,16 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot
-          .map(doc => {
+        const bills = snapshot.sort((a, b) => new Date(b.date) - new Date(a.date))
+        .map(doc => {
             try {
               return {
                 ...doc,
                 date: formatDate(doc.date),
                 status: formatStatus(doc.status)
               }
-            } catch(e) {
+            } 
+            catch(e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
               console.log(e,'for',doc)
@@ -52,6 +53,7 @@ export default class {
               }
             }
           })
+          console.log(bills)
         return bills
       })
     }
