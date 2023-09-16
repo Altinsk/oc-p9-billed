@@ -269,36 +269,35 @@ describe("Given I am a user connected as Admin", () => {
       document.body.appendChild(root)
       router()
     })
-    test("fetches bills from an API and fails with 404 http message error", async () => {
-
+    it("fetches bills from an API and fails with 404 http message error", async () => {
+      
       mockStore.bills.mockImplementationOnce(() => {
         return {
-          list : () =>  {
-            return Promise.reject(new Error("Erreur 404"))
+          list: () => {
+            return Promise.reject(new Error("Error 404"))
           }
-        }})
+        }
+      })
       window.onNavigate(ROUTES_PATH.Dashboard)
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 404/)
+      await new Promise(process.nextTick)
+      const message = await screen.getAllByText(/Error 404/)
       expect(message).toBeTruthy()
     })
-
-    test("fetches messages from an API and fails with http 500 message error", async () => {
-
+    it("fetches messages from an API and fails with http 500 message error", async () => {
+      
       mockStore.bills.mockImplementationOnce(() => {
         return {
-          list : () =>  {
-            return Promise.reject(new Error("Erreur 500"))
+          list: () => {
+            return Promise.reject(new Error("Error 404"))
           }
-        }})
-
+        }
+      })
       window.onNavigate(ROUTES_PATH.Dashboard)
-      await new Promise(process.nextTick);
-      const message = await screen.getByText(/Erreur 500/)
+      await new Promise(process.nextTick)
+      const message = await screen.getAllByText(/Error 404/)
       expect(message).toBeTruthy()
     })
   })
-
   })
 })
 

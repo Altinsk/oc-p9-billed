@@ -7,11 +7,14 @@ import "@testing-library/jest-dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import { ROUTES_PATH} from "../constants/routes.js";
+import { ROUTES } from "../constants/routes"
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import MyClass from '../containers/Bills.js';
 import { NewBillUI } from "../views/NewBillUI.js"
 import router from "../app/Router.js";
 import userEvent from "@testing-library/user-event";
+import { mockedBills } from "../__mocks__/store.js";
+
 
 
 describe("Given I am connected as an employee", () => {
@@ -119,6 +122,8 @@ describe('MyClass', () => {
     });
   });
 });
+
+
 
 
 

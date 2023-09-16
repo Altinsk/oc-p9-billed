@@ -12,8 +12,8 @@ import { ROUTES_PATH } from "../constants/routes.js";
 import router from "../app/Router.js";
 import { mockedBills } from "../__mocks__/store.js";
 import { ROUTES } from "../constants/routes.js";
-
-
+import { request } from "http";
+import mockStore from "../__mocks__/store"
 
 
 describe("Given I am connected as an employee", () => {
@@ -76,7 +76,3 @@ describe('handle submit', () => {
     expect(element).toBeInTheDocument();
   });
 });
-
-
-
-
