@@ -269,7 +269,7 @@ describe("Given I am a user connected as Admin", () => {
       document.body.appendChild(root)
       router()
     })
-    test("fetches bills from an API and fails with 404 message error", async () => {
+    test("fetches bills from an API and fails with 404 http message error", async () => {
 
       mockStore.bills.mockImplementationOnce(() => {
         return {
@@ -283,7 +283,7 @@ describe("Given I am a user connected as Admin", () => {
       expect(message).toBeTruthy()
     })
 
-    test("fetches messages from an API and fails with 500 message error", async () => {
+    test("fetches messages from an API and fails with http 500 message error", async () => {
 
       mockStore.bills.mockImplementationOnce(() => {
         return {

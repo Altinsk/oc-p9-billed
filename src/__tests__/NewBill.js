@@ -15,6 +15,7 @@ import { ROUTES } from "../constants/routes.js";
 
 
 
+
 describe("Given I am connected as an employee", () => {
   describe("When I am on NewBill Page", () => {
     it("Then ...", () => {
@@ -59,8 +60,6 @@ describe('handle submit', () => {
 
     setTimeout(() => {
       expect(newBill.billId).toEqual('1234');
-      // expect(newBill.fileUrl).toBe('https://localhost:3456/images/test.jpg');
-
     });
   });
 
@@ -77,6 +76,7 @@ describe('handle submit', () => {
     expect(element).toBeInTheDocument();
   });
 });
+
 
 
 

@@ -1,6 +1,5 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
-
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
@@ -20,6 +19,7 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
     const isValidExtention = /\.(jpe?g|png)$/i.test(filePath)
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
@@ -28,8 +28,7 @@ export default class NewBill {
 
     if(isValidExtention) {
       this.store 
-        .bills()
-        .create({
+        .bills().create({
           data: formData,
           headers: {
             noContentType: true
@@ -42,7 +41,9 @@ export default class NewBill {
           this.fileName = fileName
         }).catch(error => console.error(error))
     } else {
-      alert(" Extention accepter are .png .jpg .jpeg");
+      alert("Veuillez-selectionner un fichier valide type (JPG, JPEG, or PNG).");
+      e.target.value = "";
+      this.fileName = null;
     }
   }
   handleSubmit = e => {
